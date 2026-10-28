@@ -1,0 +1,18 @@
+Fecha: 2026-10-27 20:31
+Python: 3.12.10
+Sistema: Windows-11-10.0.26300-SP0
+
+pandas==3.1.0
+numpy==2.5.4
+pyarrow==26.0.0
+matplotlib==3.11.2
+seaborn==0.13.2
+scikit-learn==1.9.1
+lightgbm==4.7.0
+shap==0.54.1
+joblib==1.6.0
+sqlalchemy==2.1.6
+psycopg2-binary==2.9.13 (dt dec pq3 ext lo64)
+python-dotenv==ok
+kagglehub==1.0.3
+streamlit==1.66.1

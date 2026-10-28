@@ -1,0 +1,9 @@
+# Normaliza finales de línea entre Windows y GitHub (evita conflictos "fantasma")
+* text=auto
+
+# Archivos binarios: Git no debe intentar mezclarlos
+*.pbix binary
+*.png  binary
+*.jpg  binary
+*.pdf  binary
+*.joblib binary

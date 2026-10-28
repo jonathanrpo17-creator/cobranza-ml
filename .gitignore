@@ -1,0 +1,57 @@
+# =========================================================
+# .gitignore — Proyecto II: Optimización de cobranza (Prosper)
+# Todo lo que aparece aquí NUNCA se sube a GitHub.
+# =========================================================
+
+# ---- Entorno virtual de Python ----
+.venv/
+venv/
+env/
+
+# ---- Datos (se descargan desde Kaggle; ver data/README.md) ----
+data/*
+!data/README.md
+
+# ---- Secretos y credenciales ----
+.env
+*.env
+!.env.example
+kaggle.json
+**/kaggle.json
+*.pem
+*.key
+
+# ---- Cachés de Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ---- Cachés de Jupyter ----
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+
+# ---- Modelos pesados (se regeneran ejecutando los notebooks) ----
+# Los modelos pequeños (<20 MB) sí se pueden subir a models/.
+models/*.pkl
+models/*.joblib
+!models/README.md
+models/**/large_*
+
+# ---- MLflow (opcional, Fase 10) ----
+mlruns/
+mlartifacts/
+
+# ---- Power BI: archivos temporales ----
+powerbi/*.pbix.lock
+~$*
+
+# ---- Sistema operativo y editores ----
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
