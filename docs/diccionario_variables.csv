@@ -1,82 +1,82 @@
 ﻿columna,tipo,pct_nulos,n_unicos,ejemplo,rol,descripcion
-ListingKey,str,0.0,113066,1021339766868145413AB3B,por_definir,
-ListingNumber,int64,0.0,113066,193129,por_definir,
-ListingCreationDate,datetime64[ns],0.34,112682,2007-08-26 19:09:29.263000,por_definir,
-CreditGrade,str,74.59,8,C,por_definir,
-Term,int64,0.0,3,36,por_definir,
-LoanStatus,str,0.0,12,Completed,por_definir,
-ClosedDate,datetime64[us],51.67,2784,2009-08-14 00:00:00,solo_objetivo_o_roi (fuga),
-BorrowerAPR,float64,0.02,6677,0.16516,por_definir,
-BorrowerRate,float64,0.0,2294,0.158,por_definir,
-LenderYield,float64,0.0,2283,0.138,por_definir,
-EstimatedEffectiveYield,float64,25.53,1582,0.0796,por_definir,
-EstimatedLoss,float64,25.53,120,0.0249,por_definir,
-EstimatedReturn,float64,25.53,1476,0.0547,por_definir,
-ProsperRating (numeric),float64,25.53,7,6.0,por_definir,
-ProsperRating (Alpha),str,25.53,7,A,por_definir,
-ProsperScore,float64,25.53,11,7.0,por_definir,
-ListingCategory (numeric),int64,0.0,21,0,por_definir,
-BorrowerState,str,4.84,51,CO,por_definir,
-Occupation,str,3.15,67,Other,por_definir,
-EmploymentStatus,str,1.98,8,Self-employed,por_definir,
-EmploymentStatusDuration,float64,6.69,605,2.0,por_definir,
-IsBorrowerHomeowner,bool,0.0,2,True,por_definir,
-CurrentlyInGroup,bool,0.0,2,True,por_definir,
-GroupKey,str,88.29,706,783C3371218786870A73D20,por_definir,
-DateCreditPulled,datetime64[ns],74.71,28811,2007-08-26 18:41:46.780000,por_definir,
-CreditScoreRangeLower,float64,0.52,26,640.0,por_definir,
-CreditScoreRangeUpper,float64,0.52,26,659.0,por_definir,
-FirstRecordedCreditLine,str,0.61,11585,2001-10-11 00:00:00,por_definir,
-CurrentCreditLines,float64,6.67,54,5.0,por_definir,
-OpenCreditLines,float64,6.67,52,4.0,por_definir,
-TotalCreditLinespast7years,float64,0.61,118,12.0,por_definir,
-OpenRevolvingAccounts,int64,0.0,48,1,por_definir,
-OpenRevolvingMonthlyPayment,float64,0.0,2834,24.0,por_definir,
-InquiriesLast6Months,float64,0.61,50,3.0,por_definir,
-TotalInquiries,float64,1.02,102,3.0,por_definir,
-CurrentDelinquencies,float64,0.61,47,2.0,por_definir,
-AmountDelinquent,float64,6.69,7059,472.0,por_definir,
-DelinquenciesLast7Years,float64,0.87,100,4.0,por_definir,
-PublicRecordsLast10Years,float64,0.61,25,0.0,por_definir,
-PublicRecordsLast12Months,float64,6.67,7,0.0,por_definir,
-RevolvingCreditBalance,float64,6.67,38555,0.0,por_definir,
-BankcardUtilization,float64,6.67,201,0.0,por_definir,
-AvailableBankcardCredit,float64,6.62,31829,1500.0,por_definir,
-TotalTrades,float64,6.62,108,11.0,por_definir,
-TradesNeverDelinquent (percentage),float64,6.62,98,0.81,por_definir,
-TradesOpenedLast6Months,float64,6.62,19,0.0,por_definir,
-DebtToIncomeRatio,float64,7.51,1207,0.17,por_definir,
-IncomeRange,str,0.0,8,"$25,000-49,999",por_definir,
-IncomeVerifiable,bool,0.0,2,True,por_definir,
-StatedMonthlyIncome,float64,0.0,13502,3083.333333,por_definir,
-LoanKey,str,0.0,113066,E33A3400205839220442E84,por_definir,
-TotalProsperLoans,float64,80.62,9,1.0,por_definir,
-TotalProsperPaymentsBilled,float64,80.62,130,11.0,por_definir,
-OnTimeProsperPayments,float64,80.62,127,11.0,por_definir,
-ProsperPaymentsLessThanOneMonthLate,float64,80.62,41,0.0,por_definir,
-ProsperPaymentsOneMonthPlusLate,float64,80.62,17,0.0,por_definir,
-ProsperPrincipalBorrowed,float64,80.62,1442,11000.0,por_definir,
-ProsperPrincipalOutstanding,float64,80.62,13875,9947.9,por_definir,
-ScorexChangeAtTimeOfListing,float64,83.39,372,-19.0,por_definir,
-LoanCurrentDaysDelinquent,int64,0.0,2411,0,por_definir,
-LoanFirstDefaultedCycleNumber,float64,85.12,43,8.0,por_definir,
-LoanMonthsSinceOrigination,int64,0.0,94,78,por_definir,
-LoanNumber,int64,0.0,113066,19141,por_definir,
-LoanOriginalAmount,int64,0.0,2468,9425,por_definir,
-LoanOriginationDate,datetime64[us],0.0,1873,2007-09-12 00:00:00,por_definir,
-LoanOriginationQuarter,str,0.0,33,Q3 2007,por_definir,
-MemberKey,str,0.0,90831,1F3E3376408759268057EDA,por_definir,
-MonthlyLoanPayment,float64,0.0,23567,330.43,por_definir,
-LP_CustomerPayments,float64,0.0,78523,11396.14,solo_objetivo_o_roi (fuga),
-LP_CustomerPrincipalPayments,float64,0.0,49828,9425.0,solo_objetivo_o_roi (fuga),
-LP_InterestandFees,float64,0.0,78751,1971.14,solo_objetivo_o_roi (fuga),
-LP_ServiceFees,float64,0.0,19813,-133.18,solo_objetivo_o_roi (fuga),
-LP_CollectionFees,float64,0.0,6175,0.0,solo_objetivo_o_roi (fuga),
-LP_GrossPrincipalLoss,float64,0.0,15848,0.0,solo_objetivo_o_roi (fuga),
-LP_NetPrincipalLoss,float64,0.0,15709,0.0,solo_objetivo_o_roi (fuga),
-LP_NonPrincipalRecoverypayments,float64,0.0,2631,0.0,solo_objetivo_o_roi (fuga),
-PercentFunded,float64,0.0,719,1.0,por_definir,
-Recommendations,int64,0.0,17,0,por_definir,
-InvestmentFromFriendsCount,int64,0.0,14,0,por_definir,
-InvestmentFromFriendsAmount,float64,0.0,726,0.0,por_definir,
-Investors,int64,0.0,751,258,por_definir,
+ListingKey,str,0.0,113066,1021339766868145413AB3B,id,Llave única de la solicitud (listing) en Prosper.
+ListingNumber,int64,0.0,113066,193129,id,Número de la solicitud; equivalente numérico de ListingKey.
+ListingCreationDate,datetime64[ns],0.0,113064,2007-08-26 19:09:29.263000,fecha,Fecha de creación de la solicitud.
+CreditGrade,str,74.59,8,C,predictora,Calificación de Prosper de la época antigua (antes de 2009); vacía en la época reciente.
+Term,int64,0.0,3,36,predictora,Plazo del crédito en meses.
+LoanStatus,str,0.0,12,Completed,filtro,Estado actual del crédito. Chargedoff/Defaulted = población objetivo; Past Due = cartera en mora activa.
+ClosedDate,datetime64[ns],51.65,2802,2009-08-14 00:00:00,fuga,Fecha de cierre del crédito; ocurre después del desenlace. Solo para objetivo/ROI.
+BorrowerAPR,float64,0.02,6677,0.16516,predictora,"Tasa anual efectiva para el deudor, incluyendo cargos."
+BorrowerRate,float64,0.0,2294,0.158,predictora,Tasa de interés nominal del deudor.
+LenderYield,float64,0.0,2283,0.138,predictora,Rendimiento para el inversionista (tasa menos comisión de servicio).
+EstimatedEffectiveYield,float64,25.53,1582,0.0796,predictora,Rendimiento efectivo estimado por Prosper al originar (época reciente).
+EstimatedLoss,float64,25.53,120,0.0249,predictora,Pérdida estimada por Prosper al originar (época reciente).
+EstimatedReturn,float64,25.53,1476,0.0547,predictora,Retorno estimado por Prosper al originar (época reciente).
+ProsperRating (numeric),float64,25.53,7,6.0,predictora,"Calificación de Prosper de la época reciente (desde 2009), numérica 1-7."
+ProsperRating (Alpha),str,25.53,7,A,predictora,Misma calificación reciente en letras (AA a HR); redundante con la numérica.
+ProsperScore,float64,25.53,11,7.0,predictora,Puntaje de riesgo propio de Prosper (época reciente).
+ListingCategory (numeric),int64,0.0,21,0,predictora,"Propósito del crédito, codificado (0 = no disponible; consolidación de deudas, negocio, etc.)."
+BorrowerState,str,4.84,51,CO,predictora,Estado de residencia del deudor (EE. UU.).
+Occupation,str,3.15,67,Other,predictora,Ocupación declarada.
+EmploymentStatus,str,1.98,8,Self-employed,predictora,Situación laboral declarada.
+EmploymentStatusDuration,float64,6.69,605,2.0,predictora,Meses en la situación laboral actual.
+IsBorrowerHomeowner,bool,0.0,2,True,predictora,Indica si el deudor es propietario de vivienda.
+CurrentlyInGroup,bool,0.0,2,True,predictora,Indica si el deudor pertenecía a un grupo al solicitar.
+GroupKey,str,88.29,706,783C3371218786870A73D20,id,Llave del grupo de prestatarios al que pertenecía el deudor; mayormente vacía.
+DateCreditPulled,datetime64[ns],0.0,112992,2007-08-26 18:41:46.780000,fecha,Fecha de consulta del reporte de crédito del deudor.
+CreditScoreRangeLower,float64,0.52,26,640.0,predictora,Límite inferior del rango de puntaje de crédito del bureau.
+CreditScoreRangeUpper,float64,0.52,26,659.0,predictora,Límite superior del rango; redundante con el inferior (rango de 19 puntos).
+FirstRecordedCreditLine,str,0.61,11585,2001-10-11 00:00:00,predictora,Fecha de la primera línea de crédito; viene como texto y se convertirá en antigüedad crediticia.
+CurrentCreditLines,float64,6.67,54,5.0,predictora,Líneas de crédito vigentes.
+OpenCreditLines,float64,6.67,52,4.0,predictora,Líneas de crédito abiertas.
+TotalCreditLinespast7years,float64,0.61,118,12.0,predictora,Líneas de crédito en los últimos 7 años.
+OpenRevolvingAccounts,int64,0.0,48,1,predictora,"Cuentas rotativas abiertas (tarjetas, cupos)."
+OpenRevolvingMonthlyPayment,float64,0.0,2834,24.0,predictora,Pago mensual en cuentas rotativas (USD).
+InquiriesLast6Months,float64,0.61,50,3.0,predictora,Consultas a la central en los últimos 6 meses.
+TotalInquiries,float64,1.02,102,3.0,predictora,Total de consultas a la central.
+CurrentDelinquencies,float64,0.61,47,2.0,predictora,Obligaciones en mora al momento de solicitar.
+AmountDelinquent,float64,6.69,7059,472.0,predictora,Monto en mora al momento de solicitar (USD).
+DelinquenciesLast7Years,float64,0.87,100,4.0,predictora,Moras en los últimos 7 años.
+PublicRecordsLast10Years,float64,0.61,25,0.0,predictora,"Registros públicos negativos en 10 años (quiebras, embargos)."
+PublicRecordsLast12Months,float64,6.67,7,0.0,predictora,Registros públicos negativos en 12 meses.
+RevolvingCreditBalance,float64,6.67,38555,0.0,predictora,Saldo en crédito rotativo (USD).
+BankcardUtilization,float64,6.67,201,0.0,predictora,Porcentaje de uso del cupo de tarjetas.
+AvailableBankcardCredit,float64,6.62,31829,1500.0,predictora,Cupo disponible en tarjetas (USD).
+TotalTrades,float64,6.62,108,11.0,predictora,Total de obligaciones registradas.
+TradesNeverDelinquent (percentage),float64,6.62,98,0.81,predictora,Porcentaje de obligaciones que nunca han estado en mora.
+TradesOpenedLast6Months,float64,6.62,19,0.0,predictora,Obligaciones abiertas en los últimos 6 meses.
+DebtToIncomeRatio,float64,7.51,1207,0.17,predictora,Relación deuda/ingreso al solicitar.
+IncomeRange,str,0.0,8,"$25,000-49,999",predictora,Rango de ingresos anuales declarado.
+IncomeVerifiable,bool,0.0,2,True,predictora,Indica si el deudor aportó soporte de ingresos.
+StatedMonthlyIncome,float64,0.0,13502,3083.333333,predictora,Ingreso mensual declarado (USD).
+LoanKey,str,0.0,113066,E33A3400205839220442E84,id,Llave única del crédito desembolsado.
+TotalProsperLoans,float64,80.62,9,1.0,predictora,Créditos previos con Prosper (nulo = ninguno).
+TotalProsperPaymentsBilled,float64,80.62,130,11.0,predictora,Cuotas facturadas en créditos previos con Prosper.
+OnTimeProsperPayments,float64,80.62,127,11.0,predictora,Cuotas pagadas a tiempo en créditos previos con Prosper.
+ProsperPaymentsLessThanOneMonthLate,float64,80.62,41,0.0,predictora,Cuotas pagadas con menos de un mes de atraso en créditos previos.
+ProsperPaymentsOneMonthPlusLate,float64,80.62,17,0.0,predictora,Cuotas pagadas con un mes o más de atraso en créditos previos.
+ProsperPrincipalBorrowed,float64,80.62,1442,11000.0,predictora,Capital total prestado en créditos previos con Prosper (USD).
+ProsperPrincipalOutstanding,float64,80.62,13875,9947.9,predictora,Capital pendiente de créditos previos con Prosper al solicitar (USD).
+ScorexChangeAtTimeOfListing,float64,83.39,372,-19.0,predictora,Cambio del puntaje de crédito desde el último crédito con Prosper.
+LoanCurrentDaysDelinquent,int64,0.0,2411,0,fuga,Días de mora a la fecha de extracción del dataset (2014); es una foto posterior al desenlace.
+LoanFirstDefaultedCycleNumber,float64,85.12,43,8.0,revisar,"Cuota en la que el crédito cayó en default por primera vez. Se conoce al entrar en mora, pero hay que confirmar que esté disponible para toda la población."
+LoanMonthsSinceOrigination,int64,0.0,94,78,fuga,"Meses desde el desembolso hasta la extracción (2014); depende de la fecha de corte, no del deudor."
+LoanNumber,int64,0.0,113066,19141,id,Número del crédito; equivalente numérico de LoanKey.
+LoanOriginalAmount,int64,0.0,2468,9425,predictora,Monto desembolsado (USD).
+LoanOriginationDate,datetime64[us],0.0,1873,2007-09-12 00:00:00,fecha,"Fecha de desembolso. Eje de la partición temporal (entrenar con antiguos, validar con recientes)."
+LoanOriginationQuarter,str,0.0,33,Q3 2007,fecha,"Trimestre de desembolso (texto, ej. 'Q3 2007'); útil para gráficas de cosecha."
+MemberKey,str,0.0,90831,1F3E3376408759268057EDA,id,Llave del deudor. Un deudor puede tener varios créditos (base de la tabla deudores).
+MonthlyLoanPayment,float64,0.0,23567,330.43,predictora,Cuota mensual programada (USD).
+LP_CustomerPayments,float64,0.0,78523,11396.14,fuga,Total pagado por el deudor durante toda la vida del crédito (incluye pagos posteriores a la mora).
+LP_CustomerPrincipalPayments,float64,0.0,49828,9425.0,fuga,Total de capital pagado por el deudor durante toda la vida del crédito.
+LP_InterestandFees,float64,0.0,78751,1971.14,fuga,Total de intereses y cargos pagados por el deudor.
+LP_ServiceFees,float64,0.0,19813,-133.18,fuga,Comisiones de servicio acumuladas (valores negativos = cobros a inversionistas).
+LP_CollectionFees,float64,0.0,6175,0.0,fuga,Costos de cobranza acumulados; insumo para el ROI.
+LP_GrossPrincipalLoss,float64,0.0,15848,0.0,fuga,Pérdida bruta de capital al castigar el crédito.
+LP_NetPrincipalLoss,float64,0.0,15709,0.0,fuga,Pérdida neta de capital después de recuperaciones.
+LP_NonPrincipalRecoverypayments,float64,0.0,2631,0.0,fuga,Recuperaciones posteriores al castigo que no son capital.
+PercentFunded,float64,0.0,719,1.0,predictora,Porcentaje de la solicitud financiado por inversionistas.
+Recommendations,int64,0.0,17,0,predictora,Número de recomendaciones recibidas en la solicitud.
+InvestmentFromFriendsCount,int64,0.0,14,0,predictora,Número de amigos que invirtieron en el crédito.
+InvestmentFromFriendsAmount,float64,0.0,726,0.0,predictora,Monto invertido por amigos (USD).
+Investors,int64,0.0,751,258,predictora,Número de inversionistas que financiaron el crédito.

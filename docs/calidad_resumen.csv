@@ -4,7 +4,7 @@ columnas,81.0
 filas_duplicadas_exactas,0.0
 columnas_100pct_nulas,0.0
 columnas_constantes,0.0
-columnas_con_mas_50pct_nulos,13.0
+columnas_con_mas_50pct_nulos,12.0
 memoria_mb,83.6
 duplicados_en_ListingKey,871.0
 duplicados_en_GroupKey,113230.0

@@ -12,23 +12,14 @@ from pathlib import Path
 import pandas as pd
 
 from src.config import RUTAS
+from src.diccionario import DICCIONARIO, columnas_por_rol
 
 # Identificador del dataset en Kaggle
 DATASET_KAGGLE = "yousuf28/prosper-loan"
 
-# Columnas que SOLO pueden usarse para construir la variable objetivo o el ROI.
-# Nunca entran al modelo como predictoras (regla anti-fuga de datos).
-COLUMNAS_FUGA = [
-    "LP_CustomerPayments",
-    "LP_CustomerPrincipalPayments",
-    "LP_InterestandFees",
-    "LP_ServiceFees",
-    "LP_CollectionFees",
-    "LP_GrossPrincipalLoss",
-    "LP_NetPrincipalLoss",
-    "LP_NonPrincipalRecoverypayments",
-    "ClosedDate",
-]
+# Columnas con fuga de datos: SOLO para construir el objetivo o el ROI, nunca predictoras.
+# Se leen del diccionario de negocio (src/diccionario.py), la única fuente de verdad.
+COLUMNAS_FUGA = columnas_por_rol("fuga")
 
 
 def descargar_prosper() -> list[Path]:
@@ -79,15 +70,21 @@ def cargar_crudo(ruta: Path | None = None) -> pd.DataFrame:
     df = pd.read_csv(ruta, low_memory=False)
 
     for col in [c for c in df.columns if "date" in c.lower()]:
-        df[col] = pd.to_datetime(df[col], errors="coerce")
+        texto_no_nulo = df[col].notna()
+        # format="mixed": cada valor se interpreta por separado. Sin esto, pandas
+        # adivina el formato con el primer valor y convierte en nulo (NaT) todo lo
+        # que tenga otro formato (p. ej., fechas con y sin fracciones de segundo).
+        df[col] = pd.to_datetime(df[col], format="mixed", errors="coerce")
+        perdidos = int((texto_no_nulo & df[col].isna()).sum())
+        if perdidos:
+            print(f"⚠️ {col}: {perdidos:,} valores no se pudieron convertir a fecha")
     return df
 
 
 def perfil_columnas(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Construye el diccionario técnico de variables: una fila por columna con tipo,
-    % de nulos, valores únicos, un ejemplo y un rol preliminar.
-    La descripción de negocio se completa en el notebook a partir del diccionario oficial.
+    Construye el diccionario de variables: una fila por columna con tipo, % de nulos,
+    valores únicos, un ejemplo, y el rol y la descripción de negocio de src/diccionario.py.
     """
     filas = []
     for col in df.columns:
@@ -99,9 +96,12 @@ def perfil_columnas(df: pd.DataFrame) -> pd.DataFrame:
             "pct_nulos": round(serie.isna().mean() * 100, 2),
             "n_unicos": serie.nunique(dropna=True),
             "ejemplo": no_nulos.iloc[0] if len(no_nulos) else None,
-            "rol": "solo_objetivo_o_roi (fuga)" if col in COLUMNAS_FUGA else "por_definir",
-            "descripcion": "",
+            "rol": DICCIONARIO.get(col, ("sin_clasificar", ""))[0],
+            "descripcion": DICCIONARIO.get(col, ("", "⚠️ Columna no documentada"))[1],
         })
+    sin_doc = [c for c in df.columns if c not in DICCIONARIO]
+    if sin_doc:
+        print(f"⚠️ Columnas sin documentar en src/diccionario.py: {sin_doc}")
     return pd.DataFrame(filas)
 
 
