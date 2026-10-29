@@ -1,0 +1,9 @@
+﻿tabla,control,pandas,postgres,ok
+deudores,COUNT(*),15811.0,15811.0,True
+creditos,COUNT(*),17010.0,17010.0,True
+perfil_solicitud,COUNT(*),17010.0,17010.0,True
+resultados_recuperacion,COUNT(*),17010.0,17010.0,True
+creditos,SUM(monto_original),109286564.0,109286564.0,True
+resultados_recuperacion,SUM(exposicion_castigo),79806754.92,79806754.92,True
+resultados_recuperacion,SUM(recuperacion_total),5103981.04,5103981.04,True
+resultados_recuperacion,SUM(objetivo_a),3683.0,3683.0,True
