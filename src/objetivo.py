@@ -203,3 +203,30 @@ def resumen_objetivos(pob: pd.DataFrame) -> pd.DataFrame:
     por_estado = pob.groupby("LoanStatus").apply(_resumen, include_groups=False)
     por_estado.loc["TOTAL"] = _resumen(pob)
     return por_estado
+
+
+# --------------------------------------------------------------------------
+# Partición temporal
+# --------------------------------------------------------------------------
+ANIO_INICIO_VALIDACION = 2010  # cierres 2006-2009 -> entrenamiento; 2010+ -> validación
+
+
+def asignar_conjunto(pob: pd.DataFrame,
+                     anio_inicio_validacion: int = ANIO_INICIO_VALIDACION) -> pd.Series:
+    """
+    Etiqueta cada crédito según su uso:
+    - entrenamiento / validacion: créditos maduros con exposición válida, por año de cierre
+    - inmadura: con exposición pero sin ventana de maduración (cartera a priorizar en la app)
+    - excluida: sin exposición (nada que recuperar)
+    """
+    anio = pob["ClosedDate"].dt.year
+    return pd.Series(
+        np.select(
+            [~pob["exposicion_valida"],
+             ~pob["madura"],
+             anio < anio_inicio_validacion],
+            ["excluida", "inmadura", "entrenamiento"],
+            default="validacion",
+        ),
+        index=pob.index, name="conjunto",
+    )
