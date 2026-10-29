@@ -88,3 +88,31 @@ Se confirma en la Fase 5.
 **D18. Mínimo privilegio.** Power BI y la aplicación usan el rol `lector_bi`, que solo lee vistas y catálogos. Las contraseñas viven en `.env`, y la conexión se arma con `URL.create` para soportar caracteres especiales.
 
 **D19. Etiqueta de conjunto en la base.** Valores: `entrenamiento` (cierres 2006–2009), `validacion` (2010 en adelante), `inmadura` y `excluida`. El año de corte es el parámetro `ANIO_INICIO_VALIDACION` y se confirma en la Fase 5.
+
+## Fase 5 — Variables y partición
+
+**D20. Las variables se leen desde PostgreSQL.** La base es la única fuente de verdad. `src/variables.py` transforma los datos y lo usan el entrenamiento y la aplicación, así que un crédito nuevo se procesa exactamente igual que los de entrenamiento.
+
+**D21. Variables nuevas, todas calculables al entrar a cobranza:**
+- **Calificación unificada y ordinal** (AA=7 … HR=1), que combina `CreditGrade` y `ProsperRating`.
+- **Saldo contractual estimado al default.** Usa amortización francesa con monto, tasa, plazo y cuota del primer default. Es una *estimación* a partir del contrato; la pérdida real al castigo es fuga y no se usa.
+- **Proporción del plazo pagada antes del default.**
+- **Cuota sobre ingreso.**
+- **Antigüedad crediticia.**
+- **Indicador de crédito previo con Prosper.** Un valor nulo significa "no tenía" y se convierte en 0 más el indicador.
+- **Situación laboral unificada entre épocas:** Full-time, Part-time y Employed pasan a "Empleado".
+
+**D22. Tres controles automáticos contra la fuga y la dependencia de la época:**
+1. **Lista negra.** El código falla si una variable es un identificador, un desenlace o un objetivo. Además, `tests/` contiene pruebas con pytest.
+2. **Estabilidad entre épocas.** Se descartan las variables cuyo % de nulos difiere más de 20 pp entre entrenamiento y validación, y las categóricas cuya distancia de variación total supera 0,30.
+3. **AUC univariado.** Se revisa a mano cualquier variable que, por sí sola, tenga un AUC mayor que 0,90.
+
+**D23. Exclusiones por diseño:**
+- Variables de una sola época: `prosper_score` y `Estimated*`.
+- `rango_ingresos`, porque sus etiquetas cambian entre épocas.
+- `plazo_meses`, porque no varía.
+- `tasa_apr`, porque es redundante.
+- `creditos_en_cobranza`, porque es fuga.
+- Las fechas de calendario.
+
+**D24. Deudores presentes en entrenamiento y validación.** Se marcan con `deudor_visto_en_entrenamiento`. Como el identificador no es una variable del modelo, no se excluyen. En la Fase 6 las métricas se reportan con y sin estos casos.

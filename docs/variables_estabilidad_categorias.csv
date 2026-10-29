@@ -1,0 +1,5 @@
+﻿variable,distancia_tv,categoria_que_mas_cambia,pct_ent,pct_val,descartar
+proposito,0.515,0,71.1,19.6,True
+situacion_laboral,0.328,Sin dato,35.2,2.4,True
+estado_residencia,0.218,Sin dato,17.6,3.9,False
+ocupacion,0.14,Sin dato,9.5,0.2,False
