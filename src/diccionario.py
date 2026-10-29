@@ -34,7 +34,7 @@ DICCIONARIO = {
     "LoanOriginationQuarter": ("fecha", "Trimestre de desembolso (texto, ej. 'Q3 2007'); útil para gráficas de cosecha."),
 
     # ---------------- Filtro de población ----------------
-    "LoanStatus": ("filtro", "Estado actual del crédito. Chargedoff/Defaulted = población objetivo; Past Due = cartera en mora activa."),
+    "LoanStatus": ("filtro", "Estado final del crédito. Chargedoff/Defaulted = población objetivo; Past Due = cartera en mora activa. NUNCA predictora: distinguir Chargedoff de Defaulted es conocer el desenlace."),
 
     # ---------------- Fuga de datos ----------------
     "ClosedDate": ("fuga", "Fecha de cierre del crédito; ocurre después del desenlace. Solo para objetivo/ROI."),
@@ -49,8 +49,8 @@ DICCIONARIO = {
     "LoanCurrentDaysDelinquent": ("fuga", "Días de mora a la fecha de extracción del dataset (2014); es una foto posterior al desenlace."),
     "LoanMonthsSinceOrigination": ("fuga", "Meses desde el desembolso hasta la extracción (2014); depende de la fecha de corte, no del deudor."),
 
-    # ---------------- A revisar en la Fase 5 ----------------
-    "LoanFirstDefaultedCycleNumber": ("revisar", "Cuota en la que el crédito cayó en default por primera vez. Se conoce al entrar en mora, pero hay que confirmar que esté disponible para toda la población."),
+    # ---------------- Comportamiento de pago antes de la mora ----------------
+    "LoanFirstDefaultedCycleNumber": ("predictora", "Cuota en la que el crédito cayó en default por primera vez (cuántas cuotas alcanzó a pagar). Se conoce al entrar a cobranza; disponible en el 99,3 % de la población objetivo (validado en la Fase 3)."),
 
     # ---------------- Condiciones del crédito (predictoras) ----------------
     "Term": ("predictora", "Plazo del crédito en meses."),
