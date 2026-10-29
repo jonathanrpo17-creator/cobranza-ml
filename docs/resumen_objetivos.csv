@@ -1,0 +1,4 @@
+﻿LoanStatus,creditos,pct_exposicion_valida,pct_recupera_algo (A=1),exposicion_total_usd,recuperado_total_usd,tasa_recuperacion_cartera_pct,tasa_mediana_si_recupera_pct,pct_tasa_mayor_100
+Chargedoff,11992.0,99.98,19.36,55912922.0,2352706.0,4.21,10.78,1.21
+Defaulted,5018.0,97.89,27.12,23893833.0,2751275.0,11.51,70.11,9.65
+TOTAL,17010.0,99.37,21.65,79806755.0,5103981.0,6.4,18.68,3.7
