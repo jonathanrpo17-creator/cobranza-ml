@@ -1,0 +1,7 @@
+﻿,creditos_gestionados,costo_usd,recuperado_usd,incremental_usd,neto_usd,usd_por_usd_invertido
+Sin modelo: todos por llamada (sin límite),3163.0,9489.0,945772.86,827551.25,818062.25,87.21
+"Sin modelo: al azar, llamada",948.0,2844.0,364791.97,246570.36,243726.36,86.7
+Sin modelo: WhatsApp a todos + llamadas al azar,3163.0,2845.1,731532.13,613310.52,610465.42,215.57
+"Con modelo: prioriza por P×saldo, llamada",948.0,2844.0,656904.07,538682.46,535838.46,189.41
+Con modelo: WhatsApp a todos + llamadas priorizadas,3163.0,2845.1,832054.72,713833.11,710988.01,250.9
+Con modelo: prioriza + canal por segmento,3009.0,2844.7,726737.85,608516.24,605671.54,213.91

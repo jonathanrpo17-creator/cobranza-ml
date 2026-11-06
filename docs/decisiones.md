@@ -292,3 +292,60 @@ En consecuencia:
 - En la Fase 8 se optimiza la asignación de canales a cada segmento con los costos simulados.
 
 **Cartera activa inmadura** (5.196 créditos para priorizar en la aplicación): el valor esperado neto suma unos USD 1,77 millones, según los supuestos simulados.
+
+## Fase 8 — Simulación de campaña y ROI
+
+**D47. Supuestos de simulación** (`src/supuestos.py` y `src/simulacion.py`). Todos son simulados:
+- La recuperación real de Prosper es lo que logra la gestión más intensiva (negociación, efectividad 1,0).
+- **Contactado por el canal *c*:** recupera lo real × efectividad(*c*).
+- **No contactado:** recupera lo real × 10 % (pago espontáneo).
+- **Venta de cartera:** ingresa el 4 % del saldo estimado.
+- **KPI:** USD recuperados por encima de no gestionar, por cada USD invertido.
+
+**D48. Protocolo.**
+- Las estrategias se comparan en la **validación**, con el **mismo presupuesto** (30 % del costo de llamar a todos).
+- El canal de cada segmento se **optimiza con el entrenamiento** para ese presupuesto: búsqueda por coordenadas sobre el beneficio neto simulado.
+- Dentro de la campaña, el orden de gestión es el valor incremental esperado **por USD**, según el modelo (criterio voraz de la mochila).
+
+**D49. Una línea base sin modelo que también usa canales baratos.** Se agregó "WhatsApp a todos + llamadas al azar" para separar el valor del **modelo** del valor de **suponer canales digitales baratos**. En la sensibilidad, el modelo se compara contra la **mejor** estrategia sin modelo.
+
+**D50. Sensibilidad.** Se evalúan 10 escenarios: efectividad ±50 %, costos ×0,5 y ×2, pago espontáneo de 0 % y 20 %, precio de venta de 2 % y 8 %, y un escenario pesimista combinado. En cada uno se vuelve a optimizar el canal con el entrenamiento.
+
+**D51. Resultados de la primera ejecución del notebook 08** (validación, presupuesto de USD 2.844, el 30 % de llamar a todos):
+
+| Estrategia | USD incrementales | USD por USD invertido |
+|---|---|---|
+| Sin modelo: llamadas al azar | 246.570 | 86,7 |
+| **Con modelo: llamadas priorizadas por P × saldo** | **538.682** | **189,4** |
+| Sin modelo: WhatsApp a todos + llamadas al azar | 613.311 | 215,6 |
+| Con modelo: canal optimizado por segmento | 608.516 | 213,9 |
+
+**Hallazgos:**
+1. **El valor puro de la priorización es grande.** Con el mismo canal y el mismo presupuesto, el modelo recupera **2,2 veces más** que al azar (538.682 frente a 246.570).
+2. **Un canal casi gratuito reduce el valor de priorizar.** Si se supone que WhatsApp cuesta USD 0,10 y tiene 55 % de efectividad, contactar a todos cuesta muy poco y queda poco que priorizar. El modelo aporta más cuando contactar es caro o poco efectivo: en los escenarios "efectividad −50 %" (+48 %) y "pesimista combinado" (+96 %) el modelo gana con claridad.
+3. **La optimización de canal por segmento falló por el cambio entre periodos.** Con el entrenamiento, que tiene tasas de recuperación menores (D19), el optimizador decidió **vender** el segmento "Contacto selectivo", que en la validación aporta el 32 % de los USD. Con presupuesto completo, esa estrategia queda 12 % por debajo de llamar a todos.
+   - **Lección:** las decisiones irreversibles, como la venta de cartera, no deben automatizarse con datos de otro periodo. Requieren revisión humana.
+   - Se documenta como **riesgo**.
+
+**D52. Comparación corregida: "WhatsApp a todos + llamadas priorizadas por el modelo".** La comparación justa frente a la estrategia híbrida sin modelo usa la **misma mezcla de canales y el mismo costo**. La única diferencia es *a quién* se llama, así que mide exactamente el valor del modelo. Se agregó después de ver los resultados del punto D51 y se declara así. Corresponde al diseño que debió hacerse desde el inicio para aislar el efecto del modelo. La estrategia por segmento se mantiene en el reporte.
+
+**D53. Resultado final del ROI.** Comparación justa: misma mezcla de canales y mismo costo, cambiando solo a quién se llama.
+
+| Presupuesto (% de llamar a todos) | Sin modelo (mejor) | **Con modelo** | Ganancia |
+|---|---|---|---|
+| 5 % (USD 474) | 537.324 | 574.836 | +7,0 % |
+| 10 % (USD 949) | 551.200 | 623.797 | +13,2 % |
+| 20 % (USD 1.898) | 582.356 | 677.680 | +16,4 % |
+| **30 % (USD 2.847)** | **613.307** | **713.833** | **+16,4 %** |
+| 50 % (USD 4.744) | 676.510 | 770.924 | +14,0 % |
+| 75 % (USD 7.117) | 750.763 | 807.224 | +7,5 % |
+| 100 % (USD 9.489) | 827.551 | 827.551 | 0 % (todos son contactados) |
+
+Cifras en USD incrementales (por encima de no gestionar), sobre la validación.
+
+- **Con el 30 % del presupuesto, el modelo recupera USD 100.526 más** que la mejor estrategia sin modelo. Son unos **251 USD por USD invertido**, frente a 216.
+- **Con solo el 30 % del presupuesto, el modelo logra el 86 % de lo que se recuperaría llamando a todos** (713.833 / 827.551), y gasta el 70 % menos.
+- La ganancia es máxima con presupuestos intermedios (20 % a 50 %), que es la situación real de un área de cobranza. Con el presupuesto completo la ventaja es cero, porque no queda nada que priorizar.
+- **El modelo gana en los 10 escenarios de sensibilidad** frente a la mejor estrategia sin modelo. El detalle por escenario está en `docs/roi_sensibilidad.csv`.
+
+**Mensaje para la sustentación:** *"Con el mismo presupuesto y los mismos canales, decidir a quién llamar con el modelo recupera un 16 % más. Esa ventaja se mantiene en los 10 escenarios de supuestos que probamos."*

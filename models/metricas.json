@@ -49,5 +49,62 @@
     "k": 4,
     "tasa_media_entrenamiento": 0.3218407003484321,
     "modelo_version": "lgbm_A_v1"
+  },
+  "roi": {
+    "presupuesto_usd": 2846.7,
+    "supuestos": {
+      "recuperacion_sin_gestion": 0.1,
+      "precio_venta_pct_saldo": 0.04
+    },
+    "estrategias": {
+      "Sin modelo: todos por llamada (sin límite)": {
+        "creditos_gestionados": 3163.0,
+        "costo_usd": 9489.0,
+        "recuperado_usd": 945772.86,
+        "incremental_usd": 827551.25,
+        "neto_usd": 818062.25,
+        "usd_por_usd_invertido": 87.21
+      },
+      "Sin modelo: al azar, llamada": {
+        "creditos_gestionados": 948.0,
+        "costo_usd": 2844.0,
+        "recuperado_usd": 364791.97,
+        "incremental_usd": 246570.36,
+        "neto_usd": 243726.36,
+        "usd_por_usd_invertido": 86.7
+      },
+      "Sin modelo: WhatsApp a todos + llamadas al azar": {
+        "creditos_gestionados": 3163.0,
+        "costo_usd": 2845.1,
+        "recuperado_usd": 731532.13,
+        "incremental_usd": 613310.52,
+        "neto_usd": 610465.42,
+        "usd_por_usd_invertido": 215.57
+      },
+      "Con modelo: prioriza por P×saldo, llamada": {
+        "creditos_gestionados": 948.0,
+        "costo_usd": 2844.0,
+        "recuperado_usd": 656904.07,
+        "incremental_usd": 538682.46,
+        "neto_usd": 535838.46,
+        "usd_por_usd_invertido": 189.41
+      },
+      "Con modelo: WhatsApp a todos + llamadas priorizadas": {
+        "creditos_gestionados": 3163.0,
+        "costo_usd": 2845.1,
+        "recuperado_usd": 832054.72,
+        "incremental_usd": 713833.11,
+        "neto_usd": 710988.01,
+        "usd_por_usd_invertido": 250.9
+      },
+      "Con modelo: prioriza + canal por segmento": {
+        "creditos_gestionados": 3009.0,
+        "costo_usd": 2844.7,
+        "recuperado_usd": 726737.85,
+        "incremental_usd": 608516.24,
+        "neto_usd": 605671.54,
+        "usd_por_usd_invertido": 213.91
+      }
+    }
   }
 }
