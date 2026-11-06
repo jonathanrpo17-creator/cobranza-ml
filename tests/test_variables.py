@@ -7,7 +7,7 @@ import pandas as pd
 import pytest
 
 from src.variables import (COLUMNAS_PROHIBIDAS, UNIFICAR_SITUACION_LABORAL,
-                           saldo_estimado_al_default, verificar_sin_fuga)
+                           saldo_al_default, saldo_estimado_al_default, verificar_sin_fuga)
 
 
 def test_lista_negra_detecta_fuga():
@@ -52,3 +52,16 @@ def test_saldo_con_tasa_cero_es_lineal():
 
 def test_unificacion_laboral_junta_las_dos_epocas():
     assert UNIFICAR_SITUACION_LABORAL["Full-time"] == UNIFICAR_SITUACION_LABORAL["Employed"]
+
+
+def test_saldo_al_default_nunca_es_cero_tras_el_vencimiento():
+    """Un crédito que cae en default después del plazo debe al menos las cuotas impagas."""
+    df = pd.DataFrame({"monto_original": [10000.0], "tasa_interes": [0.2], "plazo_meses": [36],
+                       "cuota_primer_default": [40.0], "cuota_mensual": [0.0]})  # cuota reportada en 0
+    assert saldo_al_default(df).iloc[0] == pytest.approx(4 * 371.64, rel=1e-3)
+
+
+def test_saldo_al_default_respeta_nulos():
+    df = pd.DataFrame({"monto_original": [10000.0], "tasa_interes": [0.2], "plazo_meses": [36],
+                       "cuota_primer_default": [np.nan], "cuota_mensual": [371.6]})
+    assert np.isnan(saldo_al_default(df).iloc[0])

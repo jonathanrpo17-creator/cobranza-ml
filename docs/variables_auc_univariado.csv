@@ -8,8 +8,8 @@ moras_7_anios,0.534,+,96.0,False
 pct_saldo_pendiente_estimado,0.531,+,100.0,False
 cuota_primer_default,0.53,−,100.0,False
 proporcion_plazo_pagada,0.53,−,100.0,False
-saldo_estimado_default_log,0.529,+,100.0,False
 cupo_disponible_tarjetas_log,0.528,−,65.0,False
+saldo_estimado_default_log,0.527,+,100.0,False
 meses_situacion_laboral,0.527,+,64.8,False
 puntaje_bureau,0.525,+,98.0,False
 calificacion_ord,0.525,+,98.9,False

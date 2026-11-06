@@ -203,3 +203,92 @@ Agregar la etapa B empeora la captura en el top 20–50 %, y su R² es aproximad
 - El LightGBM de la etapa B queda documentado como experimento y como limitación: la tasa depende de gestiones que no están en los datos.
 
 **Resultado de negocio:** contactando el 20 % superior de la cartera se captura el **52 %** de los dólares recuperados, **2,3 veces** lo que se lograría al azar.
+
+## Fase 7 — Valor esperado y segmentación
+
+**D37. Valor esperado.**
+- **Bruto** = P(A) × tasa media de recuperación de entrenamiento (cuando A=1) × saldo estimado al default.
+- **Neto** = bruto × efectividad del canal − costo del canal.
+
+Los costos y efectividades de los canales son **supuestos simulados** y explícitos (`src/supuestos.py`, tabla `canales`). En la Fase 8 se someten a un análisis de sensibilidad.
+
+**D38. Segmentación con K-Means.**
+- Variables: P(recuperar) y log(saldo), estandarizadas.
+- Se ajusta con la **validación**, donde las predicciones son fuera de muestra, y luego se aplica a toda la cartera.
+- k se elige por la mejor silueta entre 3 y 6, un rango con sentido operativo.
+- Cada segmento se nombra con una regla transparente: su centro se compara con las medianas de P y de saldo.
+
+| | Saldo bajo | Saldo alto |
+|---|---|---|
+| **P alta** | Recordatorio automático (WhatsApp) | Negociación prioritaria (asesor) |
+| **P baja** | Baja recuperación / venta de cartera | Contacto selectivo (llamada) |
+
+**D39. Las predicciones se guardan en PostgreSQL** (tabla `predicciones`, versión `lgbm_A_v1`, vigente). Power BI y la aplicación las leen a través de `vw_cartera_cobranza` con el rol de solo lectura. En el entrenamiento, la probabilidad es dentro de muestra, así que las conclusiones se sacan con la validación y la cartera inmadura.
+
+**D40. Corrección del saldo estimado.** La primera ejecución de la Fase 7 mostró **495 créditos de validación (15,6 %) con saldo estimado igual a 0**, que en realidad recuperaron USD 66.307. La causa: el cálculo suponía que el deudor había pagado todas las cuotas hasta la del primer default, así que un crédito que caía en default cerca o después del vencimiento quedaba "sin deuda". La función única `saldo_al_default()` corrige esto:
+- **Cuotas pagadas = cuota del primer default − 4.** Es un supuesto: el default se declara tras unos 120 días sin pago.
+- **Piso = 4 cuotas impagas,** sin superar el monto original.
+
+Se vuelven a ejecutar los notebooks 05, 06 y 07, y las métricas finales son las de esa nueva ejecución.
+
+**D41. Regla de segmentación ajustada.** En la primera ejecución, la silueta eligió k=3 (0,77) porque separaba dos grupos extremos: el de saldo 0 (un error) y uno pequeño con P ≈ 0,96. El 80 % de la cartera quedó en un solo grupo y dos segmentos recibieron el mismo nombre. Nueva regla:
+- Variables: logit(P) y log(saldo).
+- k entre 4 y 6, porque hay 4 acciones de cobranza.
+- Ningún segmento puede tener menos del 3 % de la cartera.
+- Entre los k que cumplen, gana la mejor silueta.
+
+**D42. Grupo de probabilidad muy alta.** En la primera ejecución, 139 créditos de validación (4,4 %) tenían P media de 0,956 y **realmente** recuperó el 97,1 % de ellos: un USD 1.866 por crédito, que suman el 21,9 % de los USD recuperados. Se perfila en el notebook 07 (sección 6b) para explicar qué patrón detecta el modelo.
+
+**D43. Segunda corrección del saldo.** Después de D40 seguían 20 créditos de validación con saldo cercano a 0, porque su `cuota_mensual` reportada es 0. Ahora el piso se calcula con la **cuota contractual** (a partir del monto, la tasa y el plazo), no con la cuota reportada.
+
+**D44. Segmento "Default en primera cuota" (FPD) definido por regla de negocio.** El grupo de probabilidad muy alta (139 créditos, P ≈ 0,955, recuperación real 97,1 %) cayó en default en la **cuota 0 o 1**: 124 créditos en la cuota 1 y 10 en la cuota 0. El *First Payment Default* es una señal clásica de fraude en banca. En Prosper ese grupo recupera casi todo, y la **hipótesis** es que la plataforma recompra o rescinde los créditos con fraude confirmado. Los datos no permiten verificarlo.
+
+En consecuencia:
+1. El grupo FPD forma el **segmento 1** por regla y K-Means segmenta el resto.
+2. Su acción es la **revisión de fraude antes de cobrar**.
+3. En el notebook 07 (sección 6c) se reporta la captura de USD **con y sin FPD**, porque si ese valor viene de recompras no sería trasladable a la cobranza de un banco.
+
+**D45. Notebook 06 con el saldo corregido** (validación, 3.163 créditos):
+- **LightGBM:** AUC 0,6438.
+- **Regresión logística:** AUC 0,6365. Su PR-AUC (0,5397) y su captura en el top 20 % (43,2 %) son mayores, pero la regla de elección (AUC, con un margen de 0,005) mantiene LightGBM. Se reporta con transparencia.
+- **Lift del decil 1:** 2,24.
+- **Captura de USD en el top 20 % ordenando por P × saldo:** 53,8 %, frente a 22,6 % al azar.
+
+**D46. Resultados finales de las Fases 6 y 7** (validación con el saldo corregido, 3.163 créditos):
+
+*Modelo A*
+- **LightGBM** (179 árboles): AUC 0,6463, PR-AUC 0,5171 y Brier 0,1858, frente a 0,2087 de la tasa base.
+- **Regresión logística:** AUC 0,6306.
+
+*Captura de USD ordenando por P × saldo* (la etapa B no se usa, D36)
+
+| Contactando | Top 10 % | Top 20 % | Top 30 % | Top 50 % |
+|---|---|---|---|---|
+| Azar | 10,6 % | 22,6 % | 34,5 % | 49,7 % |
+| **P(A) × saldo** | **37,5 %** | **52,9 %** | **65,1 %** | **81,9 %** |
+
+*Sensibilidad sin FPD*
+- Captura en el top 20 %: **45,8 %**, frente a 18,6 % al azar, es decir **2,5 veces más**.
+- **El valor del modelo no depende del grupo FPD.**
+
+*Nivel*
+- USD esperados: 904.132. USD reales: 1.182.216.
+- El modelo es conservador: subestima un 23,5 %.
+
+*Segmentación* (k=4 sobre la cartera sin FPD; k=3 tenía mejor silueta, pero quedaba fuera del rango operativo; k=5 y k=6 generaban segmentos del 0,2 %)
+
+| Segmento | % créditos | Recupera (real) | USD real / crédito | % USD real |
+|---|---|---|---|---|
+| 1. Default en primera cuota (fraude) | 4,2 % | 97,8 % | 1.885 | 21,4 % |
+| 2. Contacto selectivo | 27,0 % | 22,3 % | 443 | 32,1 % |
+| 3. Negociación prioritaria | 26,8 % | 27,6 % | 410 | 29,4 % |
+| 4. Recordatorio automático | 12,8 % | 40,8 % | 288 | 9,9 % |
+| 5. Baja recuperación / venta | 29,2 % | 23,6 % | 94 | 7,3 % |
+
+**Lectura de negocio:**
+- El 29 % de la cartera (segmento 5) aporta solo el 7 % de los dólares.
+- El segmento 4 es el que más recupera en frecuencia (40,8 %), pero con saldos bajos. Un recordatorio barato es suficiente para él.
+- Los segmentos 2 y 3 concentran el 61 % de los USD.
+- En la Fase 8 se optimiza la asignación de canales a cada segmento con los costos simulados.
+
+**Cartera activa inmadura** (5.196 créditos para priorizar en la aplicación): el valor esperado neto suma unos USD 1,77 millones, según los supuestos simulados.
