@@ -4,7 +4,7 @@ ListingNumber,int64,0.0,113066,193129,id,Número de la solicitud; equivalente nu
 ListingCreationDate,datetime64[ns],0.0,113064,2007-08-26 19:09:29.263000,fecha,Fecha de creación de la solicitud.
 CreditGrade,str,74.59,8,C,predictora,Calificación de Prosper de la época antigua (antes de 2009); vacía en la época reciente.
 Term,int64,0.0,3,36,predictora,Plazo del crédito en meses.
-LoanStatus,str,0.0,12,Completed,filtro,Estado actual del crédito. Chargedoff/Defaulted = población objetivo; Past Due = cartera en mora activa.
+LoanStatus,str,0.0,12,Completed,filtro,Estado final del crédito. Chargedoff/Defaulted = población objetivo; Past Due = cartera en mora activa. NUNCA predictora: distinguir Chargedoff de Defaulted es conocer el desenlace.
 ClosedDate,datetime64[ns],51.65,2802,2009-08-14 00:00:00,fuga,Fecha de cierre del crédito; ocurre después del desenlace. Solo para objetivo/ROI.
 BorrowerAPR,float64,0.02,6677,0.16516,predictora,"Tasa anual efectiva para el deudor, incluyendo cargos."
 BorrowerRate,float64,0.0,2294,0.158,predictora,Tasa de interés nominal del deudor.
@@ -59,7 +59,7 @@ ProsperPrincipalBorrowed,float64,80.62,1442,11000.0,predictora,Capital total pre
 ProsperPrincipalOutstanding,float64,80.62,13875,9947.9,predictora,Capital pendiente de créditos previos con Prosper al solicitar (USD).
 ScorexChangeAtTimeOfListing,float64,83.39,372,-19.0,predictora,Cambio del puntaje de crédito desde el último crédito con Prosper.
 LoanCurrentDaysDelinquent,int64,0.0,2411,0,fuga,Días de mora a la fecha de extracción del dataset (2014); es una foto posterior al desenlace.
-LoanFirstDefaultedCycleNumber,float64,85.12,43,8.0,revisar,"Cuota en la que el crédito cayó en default por primera vez. Se conoce al entrar en mora, pero hay que confirmar que esté disponible para toda la población."
+LoanFirstDefaultedCycleNumber,float64,85.12,43,8.0,predictora,"Cuota en la que el crédito cayó en default por primera vez (cuántas cuotas alcanzó a pagar). Se conoce al entrar a cobranza; disponible en el 99,3 % de la población objetivo (validado en la Fase 3)."
 LoanMonthsSinceOrigination,int64,0.0,94,78,fuga,"Meses desde el desembolso hasta la extracción (2014); depende de la fecha de corte, no del deudor."
 LoanNumber,int64,0.0,113066,19141,id,Número del crédito; equivalente numérico de LoanKey.
 LoanOriginalAmount,int64,0.0,2468,9425,predictora,Monto desembolsado (USD).

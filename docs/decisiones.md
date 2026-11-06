@@ -349,3 +349,44 @@ Cifras en USD incrementales (por encima de no gestionar), sobre la validación.
 - **El modelo gana en los 10 escenarios de sensibilidad** frente a la mejor estrategia sin modelo. El detalle por escenario está en `docs/roi_sensibilidad.csv`.
 
 **Mensaje para la sustentación:** *"Con el mismo presupuesto y los mismos canales, decidir a quién llamar con el modelo recupera un 16 % más. Esa ventaja se mantiene en los 10 escenarios de supuestos que probamos."*
+
+## Fase 9 — Aplicación y dashboard
+
+**D54. Aplicación de consulta en Streamlit** (`app/app.py`). Se eligió Streamlit por cuatro razones:
+1. Es Python puro y reutiliza `src/` sin duplicar lógica.
+2. Se ejecuta con un comando y no requiere conocimientos de desarrollo web.
+3. Trae componentes listos para datos: tablas, métricas y descarga de CSV.
+4. Es gratis y funciona en local.
+
+La lógica vive en `src/servicio.py` y está cubierta con pruebas. La aplicación se conecta **solo como `lector_bi`**.
+
+Tiene tres pestañas:
+- **Consultar deudor:** probabilidad, saldo, monto esperado, segmento, acción y canal; explicación SHAP; alertas de uso responsable (fraude por default en la primera cuota, extrapolación por plazo distinto de 36 meses, saldo imputado); y la simulación "¿qué pasaría si…?".
+- **Cartera priorizada:** la lista de gestión, que se puede descargar en CSV.
+- **Resultados del modelo.**
+
+**D55. Vista `vw_entradas_modelo`.** Permite que la aplicación recalcule la predicción y la explique **sin acceder a desenlaces ni a identificadores de persona**: excluye LP_*, `estado_credito`, `fecha_cierre`, `member_key` y `group_key`. El notebook 09 verifica que la aplicación reproduce exactamente las predicciones guardadas (diferencia menor que 1e-5 y el mismo segmento).
+
+**D56. Dashboard en Power BI Desktop** conectado a PostgreSQL con `lector_bi` (guía en `docs/guia_powerbi.md`), con 5 páginas:
+1. Resumen ejecutivo.
+2. Segmentos.
+3. Priorización.
+4. ROI simulado.
+5. Sin modelo frente a con modelo.
+
+Se comparte sin licencias Pro mediante el `.pbix`, un PDF exportado, capturas de pantalla y un video.
+
+## Fase 10 — Calidad y reproducibilidad
+
+**D57. Reproducibilidad de punta a punta.** `scripts/ejecutar_todo.py` ejecuta los notebooks del 01 al 09 en orden, cada uno con un kernel nuevo, y se detiene indicando cuál falló y por qué. Con eso se demuestra que el proyecto funciona completo, no solo celda por celda.
+
+**D58. Revisión de seguridad antes de publicar.** `scripts/revisar_secretos.py` busca en **todo el historial** de Git, no solo en los archivos actuales:
+- Archivos prohibidos: `.env`, `kaggle.json` y datos.
+- Archivos de más de 20 MB.
+- Textos con forma de secreto: tokens de Kaggle, contraseñas `PG_*` y URL de conexión.
+
+Se probó en un repositorio con secretos plantados (los detectó todos) y en una copia del proyecto (sin falsas alarmas). Solo se hace público el repositorio cuando el script termina en ✅.
+
+**D59. Integración continua.** GitHub Actions (`.github/workflows/pruebas.yml`) ejecuta las 18 pruebas de pytest en cada *push* y en cada *pull request*. Las pruebas no necesitan la base de datos ni los datos de Kaggle.
+
+**D60. MLflow no se incluye.** Es opcional en el enunciado. El seguimiento de experimentos ya está cubierto con `models/metricas.json`, `docs/metricas_*.csv` y este registro de decisiones. Queda como ruta de expansión para un despliegue productivo.

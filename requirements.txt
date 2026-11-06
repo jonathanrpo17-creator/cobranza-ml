@@ -27,7 +27,8 @@ kagglehub>=0.3      # descarga del dataset desde Kaggle
 
 # --- Notebooks y aplicación ---
 ipykernel>=6.29
-streamlit>=1.35
+nbconvert>=7.16   # scripts/ejecutar_todo.py
+streamlit>=1.50
 
 # --- Pruebas ---
 pytest>=8.0
