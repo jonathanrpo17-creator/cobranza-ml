@@ -1,0 +1,11 @@
+﻿escenario,mejor_sin_modelo,sin_modelo_usd_por_usd,modelo_usd_por_usd,sin_modelo_neto_usd,modelo_neto_usd,ganancia_pct,modelo_gana,canales
+Base,WhatsApp a todos + llamadas al azar,215.56,250.9,610461.91,710988.01,16.5,True,1:Negociación con asesor | 2:Venta de cartera | 3:WhatsApp | 4:Llamada de asesor | 5:Venta de cartera
+Efectividad −50 %,WhatsApp a todos + llamadas al azar,87.01,128.23,244697.61,361828.11,47.9,True,1:Negociación con asesor | 2:Venta de cartera | 3:Venta de cartera | 4:Llamada de asesor | 5:Venta de cartera
+Efectividad +50 %,WhatsApp a todos + llamadas al azar,321.26,346.0,911178.4,981546.67,7.7,True,1:Llamada de asesor | 2:Venta de cartera | 3:WhatsApp | 4:Llamada de asesor | 5:Llamada de asesor
+"Costos ×0,5",WhatsApp a todos + llamadas al azar,431.13,501.8,611884.46,712410.56,16.4,True,1:Negociación con asesor | 2:Venta de cartera | 3:WhatsApp | 4:Llamada de asesor | 5:Venta de cartera
+Costos ×2,WhatsApp a todos + llamadas al azar,107.78,125.45,607616.81,708142.91,16.5,True,1:Negociación con asesor | 2:Venta de cartera | 3:WhatsApp | 4:Llamada de asesor | 5:Venta de cartera
+Sin pago espontáneo (0 %),WhatsApp a todos + llamadas al azar,257.12,292.45,728683.52,829209.62,13.8,True,1:Negociación con asesor | 2:Venta de cartera | 3:WhatsApp | 4:Llamada de asesor | 5:Venta de cartera
+Pago espontáneo 20 %,WhatsApp a todos + llamadas al azar,174.01,209.35,492240.31,592766.41,20.4,True,1:Negociación con asesor | 2:Venta de cartera | 3:WhatsApp | 4:Llamada de asesor | 5:Venta de cartera
+Precio de venta 2 %,WhatsApp a todos + llamadas al azar,215.56,250.9,610461.91,710988.01,16.5,True,1:Llamada de asesor | 2:Venta de cartera | 3:Llamada de asesor | 4:WhatsApp | 5:Venta de cartera
+Precio de venta 8 %,WhatsApp a todos + llamadas al azar,215.56,297.42,610461.91,843028.55,38.1,True,1:Negociación con asesor | 2:Venta de cartera | 3:Venta de cartera | 4:Llamada de asesor | 5:Venta de cartera
+Pesimista combinado,WhatsApp a todos + llamadas al azar,22.73,43.63,123630.9,242455.78,96.1,True,1:Negociación con asesor | 2:Venta de cartera | 3:Venta de cartera | 4:Llamada de asesor | 5:Venta de cartera

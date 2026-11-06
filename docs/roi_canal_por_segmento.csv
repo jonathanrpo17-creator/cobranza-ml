@@ -1,0 +1,6 @@
+﻿segmento_id,nombre,mejor_por_credito,valor_SMS,valor_WhatsApp,valor_Llamada de asesor,valor_Negociación con asesor,valor_Venta de cartera,valor_No gestionar,canal_optimizado
+1,Default en primera cuota (revisión de fraude),Negociación con asesor,803.35,1205.0,1871.6,2395.19,29.4,0.0,Negociación con asesor
+2,Contacto selectivo,Venta de cartera,63.3,94.92,144.81,175.04,274.64,0.0,Venta de cartera
+3,Negociación prioritaria,Negociación con asesor,100.3,150.43,231.15,286.05,137.46,0.0,WhatsApp
+4,Recordatorio automático,Negociación con asesor,103.5,155.22,238.62,295.65,26.52,0.0,Llamada de asesor
+5,Baja recuperación / venta de cartera,Venta de cartera,13.53,20.27,28.68,25.74,33.95,0.0,Venta de cartera
