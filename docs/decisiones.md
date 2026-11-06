@@ -116,3 +116,90 @@ Se confirma en la Fase 5.
 - Las fechas de calendario.
 
 **D24. Deudores presentes en entrenamiento y validación.** Se marcan con `deudor_visto_en_entrenamiento`. Como el identificador no es una variable del modelo, no se excluyen. En la Fase 6 las métricas se reportan con y sin estos casos.
+
+**D25. Resultados reales de los controles de la Fase 5:**
+- **Candidatas:** 48 variables. **Finales:** 35 (33 numéricas y 2 categóricas: `estado_residencia` y `ocupacion`).
+- **Bloque de 11 variables del bureau descartado por época.** En entrenamiento tienen 35,2 % de nulos y en validación 2,4 %, porque Prosper empezó a registrarlas alrededor de 2007. Son, entre otras: `uso_tarjetas`, `obligaciones_totales`, `pct_obligaciones_sin_mora`, `saldo_rotativo` y `lineas_credito_actuales`.
+- **`proposito` descartado.** El código 0 ("no disponible") es el 71,1 % en entrenamiento y el 19,6 % en validación (distancia de variación total 0,515).
+- **`situacion_laboral` descartada.** "Sin dato" es el 35,2 % frente al 2,4 % (distancia 0,328): es el mismo bloque de época.
+- **Bajo vigilancia:** `estado_residencia` ("Sin dato": 17,6 % frente a 3,9 %) y `ocupacion` (9,5 % frente a 0,2 %). En la Fase 6 se revisa con SHAP si el modelo le da peso a "Sin dato".
+- **AUC univariado máximo: 0,547** (`ingreso_mensual_log`). Ninguna variable es sospechosa de fuga, pero la señal individual es débil. Por eso el valor se mide con métricas de priorización: lift, ganancia acumulada y ROI.
+- **Deudores repetidos entre entrenamiento y validación: 15** (0,5 % de la validación). El efecto es despreciable.
+- **Cambio de distribución en el objetivo B.** La tasa media cuando hay recuperación es 20,8 % en entrenamiento y 37,6 % en validación.
+
+## Fase 6 — Modelos
+
+**D26. Protocolo de entrenamiento:**
+- La validación (cierres de 2010 en adelante) **no se usa para ajustar nada**.
+- La parada temprana de LightGBM y la calibración de Platt usan el 25 % más reciente del entrenamiento (bloque de control).
+- El modelo A se elige con una regla fijada de antemano: el mayor AUC en toda la validación. Si dos candidatos quedan a menos de 0,005, gana el más simple.
+
+**D27. Experimento con las variables del bureau.** Se compara LightGBM con 35 variables y todo el entrenamiento contra LightGBM con 46 variables, entrenado solo con los créditos que tienen datos del bureau. La comparación se hace sobre el mismo grupo de validación.
+
+**D28. Monto esperado = P(A) × tasa esperada (B) × saldo contractual estimado al default.** El saldo real al castigo es fuga, por eso se usa la estimación según el contrato.
+
+**D29. Resultados de la primera ejecución del notebook 06** (validación: 3.163 créditos cerrados entre 2010 y 2012):
+
+| Modelo A | AUC | PR-AUC (azar 0,297) | Brier (tasa base 0,2087) |
+|---|---|---|---|
+| Logística (línea base) | 0,6334 | 0,5006 | 0,1911 |
+| **LightGBM** | **0,6544** | **0,5229** | **0,1848** |
+
+- **Lift del decil 1: 2,21.** En el 10 % mejor calificado recupera el 65,6 % de los créditos, frente a un promedio de 29,7 %. Ese decil concentra el 22 % de los créditos que recuperan y el 29 % de los USD.
+- **Calibración:** el modelo subestima de forma sistemática. La probabilidad media es 0,259 y la tasa real es 0,297. Era lo esperado, porque la tasa base de validación es mayor (D19). No se recalibra con la validación, porque eso sería usarla para ajustar. El ROI resultante será conservador.
+- **Sin los 15 deudores repetidos, el AUC es 0,6543.** No hay efecto.
+
+**D30. El experimento del bureau se descarta con evidencia.** Con las 11 variables del bureau y 5.551 créditos de entrenamiento, el AUC es 0,6425. Con las 35 variables y 8.543 créditos es 0,6544. Tener más historia pesa más que tener más variables.
+
+**D31. Etapa B débil y declarada como limitación.** El MAE es 0,342 frente a 0,398 del promedio, pero el R² es −0,002. El modelo no explica la variación de la tasa dentro de la validación. Es probable que la tasa dependa de las gestiones de cobranza, que Prosper no registra. En el notebook 06 (sección 10) se mide el aporte real de la etapa B comparando P(A) × saldo con P(A) × B × saldo.
+
+**D32. Ganancia en USD** (primera ejecución, % de los USD recuperados capturados):
+
+| Orden | Top 10 % | Top 20 % | Top 50 % |
+|---|---|---|---|
+| Azar | 10,6 % | 22,6 % | 49,7 % |
+| Por probabilidad (A) | 29,3 % | 38,0 % | 65,0 % |
+| Por monto esperado | 38,6 % | 49,1 % | 79,0 % |
+
+Contactando el 20 % superior según el monto esperado se captura **2,2 veces** lo que se lograría al azar. Parte de esto viene del saldo, porque una deuda más grande permite recuperar más dólares. Es legítimo, ya que el saldo se conoce al entrar a cobranza, y se cuantifica en D31.
+
+**D33. Regla D25 activada: salen `estado_residencia` y `ocupacion`.**
+- SHAP ubicó a `estado_residencia` como la 2.ª variable más importante, y su categoría "Sin dato" tiene un SHAP medio de +0,087 frente a +0,003 del resto. "Sin dato" es el 17,6 % del entrenamiento y el 3,9 % de la validación: el modelo estaba leyendo la época.
+- `ocupacion` (5.º lugar) tiene el mismo patrón y alta cardinalidad (67 categorías).
+- Se excluyen **por principio, no por su AUC**. El notebook 06 (sección 4b) reporta el costo de la decisión.
+- Las variables más importantes que se conservan tienen sentido de negocio: `cuota_primer_default` (1.ª), `pct_saldo_pendiente_estimado`, `moras_7_anios`, `lineas_credito_7_anios` e `ingreso_mensual_log`.
+
+**D34. Modelo A oficial: LightGBM con 33 variables numéricas** (sin variables de época):
+- AUC 0,6464, frente a 0,6225 de la regresión logística.
+- PR-AUC 0,5144, cuando el azar daría 0,297.
+- Brier 0,1859, frente a 0,2087 de la tasa base.
+- **Lift del decil 1: 2,18.** En ese decil recupera el 64,7 % de los créditos, frente al 29,7 % promedio.
+- La calibración de Platt mejora el Brier de 0,1888 a 0,1859.
+
+El costo de sacar `estado_residencia` y `ocupacion` fue de 0,008 de AUC (0,6544 → 0,6464). En cambio, la captura de USD en el top 20 % **subió** de 38,0 % a 39,6 %. El modelo es más robusto y no pierde valor para el negocio.
+
+**D35. SHAP sin señales de época.** Las cinco variables más importantes son:
+1. `cuota_primer_default`
+2. `moras_7_anios`
+3. `lineas_credito_7_anios`
+4. `ingreso_mensual_log`
+5. `pct_saldo_pendiente_estimado`
+
+Todas son información del deudor o del comportamiento de pago, y tienen sentido de negocio.
+
+**D36. La etapa B no aporta a la priorización y se reemplaza por una tasa constante.**
+
+| Orden (validación) | Top 10 % | Top 20 % | Top 30 % | Top 50 % |
+|---|---|---|---|---|
+| Azar | 10,6 % | 22,6 % | 34,5 % | 49,7 % |
+| P(A) | 29,4 % | 39,6 % | 50,4 % | 64,5 % |
+| **P(A) × saldo** | 35,8 % | **52,0 %** | **62,5 %** | **80,1 %** |
+| P(A) × B × saldo | 36,8 % | 50,7 % | 59,9 % | 78,4 % |
+
+Agregar la etapa B empeora la captura en el top 20–50 %, y su R² es aproximadamente 0 (D31). Por la regla de simplicidad:
+- **E[monto] = P(A) × tasa media de entrenamiento × saldo estimado.**
+- El orden de la cartera equivale al de P(A) × saldo.
+- La tasa media de entrenamiento se usa para el nivel del ROI, y es conservadora porque la de validación es mayor.
+- El LightGBM de la etapa B queda documentado como experimento y como limitación: la tasa depende de gestiones que no están en los datos.
+
+**Resultado de negocio:** contactando el 20 % superior de la cartera se captura el **52 %** de los dólares recuperados, **2,3 veces** lo que se lograría al azar.
