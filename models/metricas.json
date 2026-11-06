@@ -1,0 +1,48 @@
+{
+  "modelo_A": "LightGBM",
+  "modelo_B": "LightGBM",
+  "validacion_A": {
+    "modelo": "LightGBM",
+    "auc_roc": 0.6464,
+    "pr_auc": 0.5144,
+    "pr_auc_azar": 0.2969,
+    "brier": 0.1859,
+    "brier_tasa_base": 0.2087,
+    "prob_media": 0.2558,
+    "tasa_real": 0.2969
+  },
+  "validacion_B": {
+    "modelo": "LightGBM",
+    "mae": 0.3512,
+    "rmse": 0.4103,
+    "r2": -0.0402
+  },
+  "captura_usd": {
+    "Azar": {
+      "captura_usd_top10": 0.1059,
+      "captura_usd_top20": 0.2264,
+      "captura_usd_top30": 0.3446,
+      "captura_usd_top50": 0.4973
+    },
+    "Por probabilidad (A)": {
+      "captura_usd_top10": 0.2939,
+      "captura_usd_top20": 0.3962,
+      "captura_usd_top30": 0.5044,
+      "captura_usd_top50": 0.6451
+    },
+    "Por P(A) × saldo (sin etapa B)": {
+      "captura_usd_top10": 0.3581,
+      "captura_usd_top20": 0.5197,
+      "captura_usd_top30": 0.6247,
+      "captura_usd_top50": 0.8006
+    },
+    "Por monto esperado (A×B×saldo)": {
+      "captura_usd_top10": 0.3678,
+      "captura_usd_top20": 0.5065,
+      "captura_usd_top30": 0.5994,
+      "captura_usd_top50": 0.7836
+    }
+  },
+  "lift_decil_1": 2.1784,
+  "ratio_saldo_mediano": 0.6928049276221937
+}

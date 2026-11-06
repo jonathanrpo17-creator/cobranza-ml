@@ -1,0 +1,5 @@
+﻿orden,captura_usd_top10,captura_usd_top20,captura_usd_top30,captura_usd_top50
+Azar,0.1059,0.2264,0.3446,0.4973
+Por probabilidad (A),0.2939,0.3962,0.5044,0.6451
+Por P(A) × saldo (sin etapa B),0.3581,0.5197,0.6247,0.8006
+Por monto esperado (A×B×saldo),0.3678,0.5065,0.5994,0.7836
