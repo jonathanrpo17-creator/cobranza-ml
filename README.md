@@ -79,6 +79,8 @@ flowchart LR
 
 Cada decisión, con la evidencia que la respalda, está en el [**registro de decisiones**](docs/decisiones.md).
 
+Los riesgos y obstáculos, el enfoque de datos, la gestión de la información (calidad, accesibilidad, gobernanza y marco legal colombiano: Leyes 1581, 1266/2157 y 2300) y el plan de expansión con datos colombianos están en la [**documentación del proyecto**](docs/documentacion_proyecto.md).
+
 ## 5. Cómo reproducirlo desde cero (Windows)
 
 **Requisitos:** Python 3.12, Git, PostgreSQL 17 y una cuenta de Kaggle.
