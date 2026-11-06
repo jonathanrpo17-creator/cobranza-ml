@@ -390,3 +390,16 @@ Se probó en un repositorio con secretos plantados (los detectó todos) y en una
 **D59. Integración continua.** GitHub Actions (`.github/workflows/pruebas.yml`) ejecuta las 18 pruebas de pytest en cada *push* y en cada *pull request*. Las pruebas no necesitan la base de datos ni los datos de Kaggle.
 
 **D60. MLflow no se incluye.** Es opcional en el enunciado. El seguimiento de experimentos ya está cubierto con `models/metricas.json`, `docs/metricas_*.csv` y este registro de decisiones. Queda como ruta de expansión para un despliegue productivo.
+
+## Fase 11 — Documentación
+
+**D61. Documentación del proyecto** (`docs/documentacion_proyecto.md`). Contiene:
+- 13 riesgos con su mitigación y su evidencia.
+- Los obstáculos del proceso.
+- El enfoque de datos.
+- La gestión de la información en cuatro partes: calidad en 5 capas, accesibilidad por tipo de usuario, gobernanza y marco legal colombiano verificado.
+- La arquitectura, los recursos y un plan de expansión en 5 etapas.
+
+**D62. Ajuste por la Ley 2300 de 2023.** Una vez hay contacto directo, la ley no permite contactar al deudor por varios canales en la misma semana. Por eso la estrategia ganadora de la Fase 8 ("WhatsApp a todos + llamadas priorizadas") debe **escalonarse**: primero el WhatsApp, y la llamada en otra semana solo si no hubo contacto efectivo. El resultado simulado no cambia, porque la simulación cuenta un resultado por crédito por campaña y no modela la semana del contacto. Lo que cambia es la ejecución real, que debe incluir esta restricción.
+
+**D63. Hábeas data financiero.** La Ley 1266 de 2008, modificada por la Ley 2157 de 2021, limita el uso de la información de las centrales de riesgo al análisis del riesgo crediticio. Si usar variables del bureau para priorizar la cobranza encaja en esa finalidad debe validarlo el área legal antes de una implementación en Colombia. Se registra como riesgo abierto.
