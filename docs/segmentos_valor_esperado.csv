@@ -1,0 +1,11 @@
+﻿conjunto,segmento_id,nombre,creditos,monto_esperado_usd,costo_usd,valor_esperado_neto_usd,pct_ve_negativo
+inmadura,1,Default en primera cuota (revisión de fraude),83,119125.8,1245.0,117880.8,0.0
+inmadura,2,Contacto selectivo,2359,959387.58,7077.0,760433.06,0.0
+inmadura,3,Negociación prioritaria,2129,872530.56,31935.0,840595.56,0.0
+inmadura,4,Recordatorio automático,309,92810.61,30.9,51014.94,0.0
+inmadura,5,Baja recuperación / venta de cartera,316,19724.32,0.0,0.0,0.0
+validacion,1,Default en primera cuota (revisión de fraude),134,252435.43,2010.0,250425.43,0.0
+validacion,2,Contacto selectivo,855,256510.27,2565.0,202643.21,0.0
+validacion,3,Negociación prioritaria,847,226227.43,12705.0,213522.43,0.0
+validacion,4,Recordatorio automático,404,43727.23,40.4,24009.57,0.0
+validacion,5,Baja recuperación / venta de cartera,923,47284.42,0.0,0.0,0.0

@@ -1,0 +1,6 @@
+﻿segmento_id,nombre,descripcion,accion_sugerida,canal_sugerido
+1,Default en primera cuota (revisión de fraude),"Cayó en default en la cuota 0-1: patrón típico de fraude (FPD); en Prosper casi siempre se recupera, probablemente por recompra de la plataforma.",Verificar identidad y documentos; escalar a fraude o recompra antes de cobrar.,Negociación con asesor
+2,Contacto selectivo,"Baja probabilidad pero saldo alto: vale un contacto, no un esfuerzo intensivo. (P media centro 0.18; saldo centro USD 4,398)",Una llamada de diagnóstico; escalar a negociación solo si hay disposición.,Llamada de asesor
+3,Negociación prioritaria,"Alta probabilidad y saldo alto: donde más dinero se recupera por contacto. (P media centro 0.25; saldo centro USD 2,846)",Asignar asesor senior; ofrecer acuerdo de pago o refinanciación.,Negociación con asesor
+4,Recordatorio automático,Alta probabilidad de pago y saldo bajo: un recordatorio barato basta. (P media centro 0.33; saldo centro USD 746),Mensaje automático con enlace de pago; SMS si no hay lectura en 48 h.,WhatsApp
+5,Baja recuperación / venta de cartera,Baja probabilidad y saldo bajo: gestionar cuesta más de lo que se espera recuperar. (P media centro 0.20; saldo centro USD 707),No gestionar activamente; evaluar venta a un tercero.,Venta de cartera

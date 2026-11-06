@@ -112,6 +112,32 @@ def saldo_estimado_al_default(monto: pd.Series, tasa_anual: pd.Series,
     return pd.Series(saldo, index=monto.index).clip(lower=0)
 
 
+# Supuesto: Prosper declara el default tras ~120 días sin pago (≈ 4 cuotas). Por eso,
+# al llegar a la cuota del primer default, el deudor llevaba ~4 cuotas sin pagar.
+CUOTAS_SIN_PAGO_AL_DEFAULT = 4
+
+
+def saldo_al_default(df: pd.DataFrame) -> pd.Series:
+    """
+    Saldo estimado al entrar a cobranza (USD). Función ÚNICA que usan las variables,
+    los modelos, la segmentación y la aplicación.
+
+    - Cuotas pagadas = cuota del primer default − 4 (las 4 cuotas impagas que causan el default).
+    - Piso = esas 4 cuotas impagas (sin superar el monto): un crédito que cae en default
+      cerca o después del vencimiento NO tiene saldo cero, debe al menos lo que dejó de pagar.
+    """
+    pagadas = (df["cuota_primer_default"] - CUOTAS_SIN_PAGO_AL_DEFAULT).clip(lower=0)
+    saldo = saldo_estimado_al_default(df["monto_original"], df["tasa_interes"],
+                                      df["plazo_meses"], pagadas)
+    # Cuota contractual calculada (la reportada viene en 0 en algunos créditos)
+    r = df["tasa_interes"] / 12
+    cuota = np.where(r > 0, df["monto_original"] * r / (1 - (1 + r) ** (-df["plazo_meses"])),
+                     df["monto_original"] / df["plazo_meses"])
+    piso = np.minimum(CUOTAS_SIN_PAGO_AL_DEFAULT * cuota, df["monto_original"])
+    resultado = pd.Series(np.maximum(saldo.to_numpy(), piso), index=df.index).round(2)
+    return resultado.where(df["cuota_primer_default"].notna())
+
+
 def construir_variables(df: pd.DataFrame) -> pd.DataFrame:
     """
     Devuelve SOLO las variables candidatas (una fila por crédito, mismo índice).
@@ -137,8 +163,7 @@ def construir_variables(df: pd.DataFrame) -> pd.DataFrame:
     # --- Comportamiento de pago antes del default ---
     v["cuota_primer_default"] = df["cuota_primer_default"]
     v["proporcion_plazo_pagada"] = (df["cuota_primer_default"] / df["plazo_meses"]).clip(0, 1)
-    saldo = saldo_estimado_al_default(df["monto_original"], df["tasa_interes"],
-                                      df["plazo_meses"], df["cuota_primer_default"])
+    saldo = saldo_al_default(df)
     v["saldo_estimado_default_log"] = np.log1p(saldo)
     v["pct_saldo_pendiente_estimado"] = (saldo / df["monto_original"]).clip(0, 1)
 

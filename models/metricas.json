@@ -3,19 +3,19 @@
   "modelo_B": "LightGBM",
   "validacion_A": {
     "modelo": "LightGBM",
-    "auc_roc": 0.6464,
-    "pr_auc": 0.5144,
+    "auc_roc": 0.6463,
+    "pr_auc": 0.5171,
     "pr_auc_azar": 0.2969,
-    "brier": 0.1859,
+    "brier": 0.1858,
     "brier_tasa_base": 0.2087,
-    "prob_media": 0.2558,
+    "prob_media": 0.2561,
     "tasa_real": 0.2969
   },
   "validacion_B": {
     "modelo": "LightGBM",
-    "mae": 0.3512,
-    "rmse": 0.4103,
-    "r2": -0.0402
+    "mae": 0.3411,
+    "rmse": 0.4032,
+    "r2": -0.0049
   },
   "captura_usd": {
     "Azar": {
@@ -25,24 +25,29 @@
       "captura_usd_top50": 0.4973
     },
     "Por probabilidad (A)": {
-      "captura_usd_top10": 0.2939,
-      "captura_usd_top20": 0.3962,
-      "captura_usd_top30": 0.5044,
-      "captura_usd_top50": 0.6451
+      "captura_usd_top10": 0.3014,
+      "captura_usd_top20": 0.4078,
+      "captura_usd_top30": 0.5092,
+      "captura_usd_top50": 0.6536
     },
     "Por P(A) × saldo (sin etapa B)": {
-      "captura_usd_top10": 0.3581,
-      "captura_usd_top20": 0.5197,
-      "captura_usd_top30": 0.6247,
-      "captura_usd_top50": 0.8006
+      "captura_usd_top10": 0.3746,
+      "captura_usd_top20": 0.5293,
+      "captura_usd_top30": 0.6509,
+      "captura_usd_top50": 0.8192
     },
     "Por monto esperado (A×B×saldo)": {
-      "captura_usd_top10": 0.3678,
-      "captura_usd_top20": 0.5065,
-      "captura_usd_top30": 0.5994,
-      "captura_usd_top50": 0.7836
+      "captura_usd_top10": 0.3946,
+      "captura_usd_top20": 0.5183,
+      "captura_usd_top30": 0.6158,
+      "captura_usd_top50": 0.7879
     }
   },
-  "lift_decil_1": 2.1784,
-  "ratio_saldo_mediano": 0.6928049276221937
+  "lift_decil_1": 2.2527,
+  "ratio_saldo_mediano": 0.7901009803921568,
+  "segmentacion": {
+    "k": 4,
+    "tasa_media_entrenamiento": 0.3218407003484321,
+    "modelo_version": "lgbm_A_v1"
+  }
 }
